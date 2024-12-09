@@ -4,7 +4,6 @@ import com.tarcisioproject.passwordgenerator.domain.Password;
 import com.tarcisioproject.passwordgenerator.domain.dto.PasswordDto;
 import com.tarcisioproject.passwordgenerator.repository.PasswordRepository;
 import com.tarcisioproject.passwordgenerator.service.PasswordService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -17,8 +16,6 @@ import java.util.regex.Pattern;
 public class PasswordServiceImp implements PasswordService {
 
     private final PasswordRepository repository;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
 
     private static final String UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz";
@@ -39,13 +36,18 @@ public class PasswordServiceImp implements PasswordService {
 
         String password = createPassword(dto);
         password = validateAllItemns(password, dto);
-        pass.setPassword(encoder.encode(password));
+        pass.setPassword(password);
 
         repository.save(pass);
 
-        pass.setPassword(password);
-
         return pass;
+    }
+
+    @Override
+    public List<Password> retrievePasswords() {
+        List<Password> passwordList = repository.findAll();
+
+        return passwordList;
     }
 
     private String createPassword(PasswordDto dto) {
@@ -58,7 +60,7 @@ public class PasswordServiceImp implements PasswordService {
         if (dto.isUppercase()) {
             passwordBuilder.append(getValues(dto.getPasswordLength(), UPPERCASE_CHARS));
         }
-        if (dto.isNumber()) {
+        if (dto.isNumbers()) {
             passwordBuilder.append(getValues(dto.getPasswordLength(), NUMBERS));
         }
         if (dto.isSpecialChar()) {
@@ -82,7 +84,7 @@ public class PasswordServiceImp implements PasswordService {
     }
 
     private String formatPassword(int length, StringBuilder passwordBuilder) {
-        List<Character> passwordChars = passwordBuilder.toString().chars().mapToObj(c -> (char) c).toList();
+        List<Character> passwordChars = convertCharacterList(passwordBuilder.toString());
         Collections.shuffle(passwordChars);
         StringBuilder finalPassword = new StringBuilder();
         for (char c : passwordChars) {
@@ -99,5 +101,13 @@ public class PasswordServiceImp implements PasswordService {
             charsBuilder.append(values.charAt(random.nextInt(values.length())));
         }
         return charsBuilder.toString();
+    }
+
+    private List<Character> convertCharacterList(String str) {
+        List<Character> list = new ArrayList<>();
+        for (char c : str.toCharArray()) {
+            list.add(c);
+        }
+        return list;
     }
 }

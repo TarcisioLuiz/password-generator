@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class PasswordController {
@@ -21,5 +24,11 @@ public class PasswordController {
     public ResponseEntity<Password> generatePassword(@RequestBody PasswordDto dto) {
         Password response = service.generatePassword(dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("password-history")
+    public ResponseEntity<List<Password>> retrievePasswords() {
+        List<Password> response = service.retrievePasswords();
+        return ResponseEntity.ok(response);
     }
 }

@@ -5,7 +5,7 @@ public class PasswordDto {
     private int passwordLength;
     private boolean uppercase;
     private boolean lowercase;
-    private boolean number;
+    private boolean numbers;
     private boolean specialChar;
 
     public int getPasswordLength() {
@@ -32,12 +32,12 @@ public class PasswordDto {
         this.lowercase = lowercase;
     }
 
-    public boolean isNumber() {
-        return number;
+    public boolean isNumbers() {
+        return numbers;
     }
 
-    public void setNumber(boolean number) {
-        this.number = number;
+    public void setNumbers(boolean numbers) {
+        this.numbers = numbers;
     }
 
     public boolean isSpecialChar() {
