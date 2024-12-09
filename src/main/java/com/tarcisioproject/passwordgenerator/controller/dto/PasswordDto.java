@@ -1,4 +1,4 @@
-package com.tarcisioproject.passwordgenerator.domain.dto;
+package com.tarcisioproject.passwordgenerator.controller.dto;
 
 public class PasswordDto {
 

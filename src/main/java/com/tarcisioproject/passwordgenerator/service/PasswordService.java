@@ -1,7 +1,7 @@
 package com.tarcisioproject.passwordgenerator.service;
 
 import com.tarcisioproject.passwordgenerator.domain.Password;
-import com.tarcisioproject.passwordgenerator.domain.dto.PasswordDto;
+import com.tarcisioproject.passwordgenerator.controller.dto.PasswordDto;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.tarcisioproject.passwordgenerator.service.imp;
 
 import com.tarcisioproject.passwordgenerator.domain.Password;
-import com.tarcisioproject.passwordgenerator.domain.dto.PasswordDto;
+import com.tarcisioproject.passwordgenerator.controller.dto.PasswordDto;
 import com.tarcisioproject.passwordgenerator.repository.PasswordRepository;
 import com.tarcisioproject.passwordgenerator.service.PasswordService;
 import org.springframework.stereotype.Service;
