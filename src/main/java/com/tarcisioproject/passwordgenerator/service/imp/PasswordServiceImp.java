@@ -10,7 +10,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 public class PasswordServiceImp implements PasswordService {
@@ -21,10 +20,6 @@ public class PasswordServiceImp implements PasswordService {
     private static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "0123456789";
     private static final String SPECIAL_CHARS = "!@#$%^&*()-_+=<>?";
-    private static final String UPPERCASE_PATTERN = ".*[A-Z].*";
-    private static final String LOWERCASE_PATTERN = ".*[a-z].*";
-    private static final String NUMBER_PATTERN = ".*[0-9].*";
-    private static final String SPECIAL_CHAR_PATTERN = ".*[!@#$%^&*()\\-_=+<>?].*";
 
     public PasswordServiceImp(PasswordRepository repository) {
         this.repository = repository;
@@ -35,7 +30,6 @@ public class PasswordServiceImp implements PasswordService {
         Password pass = new Password();
 
         String password = createPassword(dto);
-        password = validateAllItemns(password, dto);
         pass.setPassword(password);
 
         repository.save(pass);
@@ -68,18 +62,6 @@ public class PasswordServiceImp implements PasswordService {
         }
 
         password = formatPassword(dto.getPasswordLength(), passwordBuilder);
-        return password;
-    }
-
-    private String validateAllItemns(String password, PasswordDto dto) {
-        if (Pattern.matches(UPPERCASE_PATTERN, password) &&
-                Pattern.matches(LOWERCASE_PATTERN,  password) &&
-                Pattern.matches(NUMBER_PATTERN, password) &&
-                Pattern.matches(SPECIAL_CHAR_PATTERN, password)) {
-            return password;
-        }
-        password = createPassword(dto);
-        password = validateAllItemns(password, dto);
         return password;
     }
 
